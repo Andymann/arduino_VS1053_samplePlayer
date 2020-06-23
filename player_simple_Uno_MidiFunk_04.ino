@@ -141,14 +141,16 @@ bool playFile(String pFilename){
     char copy[pFilename.length()];
     pFilename.toCharArray(copy, pFilename.length()+1);
         
-    Serial.print("playFile:*");Serial.print(copy);Serial.println("*");
+//    Serial.print("playFile:*");Serial.print(copy);Serial.println("*");
     musicPlayer.stopPlaying();
+    delay(50);
     musicPlayer.startPlayingFile( copy );
+    delay(50);
     
-    //musicPlayer.startPlayingFile("/start.mp3");
+//    musicPlayer.startPlayingFile("/start.mp3");
     bReturn = true;
   }else{
-    Serial.println("playFile(): SDPlayer not ready");
+    //Serial.println("playFile(): SDPlayer not ready");
   }
   return bReturn;
 }
@@ -227,13 +229,11 @@ void loop() {
         mySerial.write(144);
         mySerial.write(iNote);
         mySerial.write(127);   
-        //musicPlayer.stopPlaying();
-        //musicPlayer.startPlayingFile("/smp001.mp3");
+        
 
         
         musicPlayer.stopPlaying();
-        
-        
+                
         char *tmp = malloc(5);        
         sprintf(tmp, "%03d", iNote);        
         
@@ -242,9 +242,9 @@ void loop() {
         sFilename.concat(".mp3");
         char copy[11];
         sFilename.toCharArray(copy, 12);
+        free(tmp);
         
         //Serial.print("*");Serial.print(copy);Serial.println("*");
-        //musicPlayer.startPlayingFile( copy );
         playFile( copy );
 
         
@@ -295,8 +295,8 @@ void printDirectory(File dir, int numTabs) {
        printDirectory(entry, numTabs+1);
      } else {
        // files have sizes, directories do not
-       Serial.print("\t\t");
-       Serial.println(entry.size(), DEC);
+//       Serial.print("\t\t");
+//       Serial.println(entry.size(), DEC);
      }
      entry.close();
    }  
